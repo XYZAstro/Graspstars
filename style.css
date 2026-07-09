@@ -12,25 +12,63 @@ body {
   position: relative;
 }
 /* 闪烁星空背景 */
+/* 纯CSS随机像素星空背景 */
+/* 高密度纯CSS像素星空 */
 .star-bg {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   z-index: -1;
-  background-image: 
-    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
-    radial-gradient(1px 1px at 40px 70px, #fff, transparent),
-    radial-gradient(2px 2px at 50px 160px, #b8d4ff, transparent),
-    radial-gradient(1px 1px at 90px 40px, #fff, transparent);
-  background-repeat: repeat;
-  background-size: 200px 200px;
-  animation: twinkle 8s ease-in-out infinite;
+  background-color: #040416;
+  /* 一共30个径向渐变=30颗星星，复制增加、删除减少 */
+  background-image:
+    radial-gradient(1px 1px at 10% 15%, #ffffff, transparent),
+    radial-gradient(1px 1px at 22% 43%, #cce0ff, transparent),
+    radial-gradient(2px 2px at 35% 78%, #e6f0ff, transparent),
+    radial-gradient(1px 1px at 44% 21%, #ffffff, transparent),
+    radial-gradient(1px 1px at 58% 66%, #b8d4ff, transparent),
+    radial-gradient(2px 2px at 67% 12%, #d0e6ff, transparent),
+    radial-gradient(1px 1px at 76% 50%, #ffffff, transparent),
+    radial-gradient(1px 1px at 88% 33%, #a6ccff, transparent),
+    radial-gradient(2px 2px at 92% 82%, #e6f0ff, transparent),
+    radial-gradient(1px 1px at 8% 90%, #cce0ff, transparent),
+    radial-gradient(1px 1px at 15% 60%, #fff, transparent),
+    radial-gradient(2px 2px at 30% 10%, #d0e6ff, transparent),
+    radial-gradient(1px 1px at 50% 35%, #cce0ff, transparent),
+    radial-gradient(1px 1px at 62% 88%, #fff, transparent),
+    radial-gradient(2px 2px at 78% 20%, #b8d4ff, transparent),
+    radial-gradient(1px 1px at 95% 45%, #e6f0ff, transparent),
+    radial-gradient(1px 1px at 5% 30%, #fff, transparent),
+    radial-gradient(2px 2px at 28% 92%, #a6ccff, transparent),
+    radial-gradient(1px 1px at 42% 5%, #cce0ff, transparent),
+    radial-gradient(1px 1px at 66% 40%, #fff, transparent),
+    radial-gradient(2px 2px at 82% 70%, #d0e6ff, transparent),
+    radial-gradient(1px 1px at 12% 75%, #b8d4ff, transparent),
+    radial-gradient(1px 1px at 38% 28%, #e6f0ff, transparent),
+    radial-gradient(2px 2px at 55% 55%, #fff, transparent),
+    radial-gradient(1px 1px at 70% 95%, #cce0ff, transparent),
+    radial-gradient(1px 1px at 85% 10%, #a6ccff, transparent),
+    radial-gradient(2px 2px at 20% 50%, #d0e6ff, transparent),
+    radial-gradient(1px 1px at 48% 78%, #b8d4ff, transparent),
+    radial-gradient(1px 1px at 69% 18%, #e6f0ff, transparent),
+    radial-gradient(2px 2px at 90% 60%, #ffffff, transparent);
+  /* 缩小平铺尺寸，让星星重复铺满屏幕，密度翻倍 */
+  background-size: 700px 700px;
+  animation: starTwinkle 7s ease-in-out infinite alternate;
 }
-@keyframes twinkle {
-  0%, 100% { opacity: 0.7; }
-  50% { opacity: 1; }
+
+/* 星星闪烁动画 */
+@keyframes starTwinkle {
+  0% {
+    opacity: 0.6;
+    background-size: 650px 650px;
+  }
+  100% {
+    opacity: 1;
+    background-size: 750px 750px;
+  }
 }
 
 /* 顶部导航栏 */

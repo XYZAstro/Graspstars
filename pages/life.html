@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>数理笺 | Graspstars</title>
+  <title>生活笺 | Graspstars</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -17,16 +17,16 @@
   </div>
   <nav class="nav-menu">
     <a href="../index.html">首页</a>
-    <a href="./math.html" class="active">Mathematics 数理笺</a>
+    <a href="./math.html" ">Mathematics 数理笺</a>
     <a href="./astro.html">Astro 深空笺</a>
     <a href="./karto.html">Kartogrophy 视觉笺</a>
     <a href="./eng.html">Engineering 工程笺</a>
-    <a href="./life.html">Romantic 生活笺</a>
+    <a href="./life.html" class="active">Romantic 生活笺</a>
   </nav>
 </header>
 
 <div class="container">
-  <h2 class="page-title">Mathematics 数理笺</h2>
+  <h2 class="page-title">Romantic 生活笺</h2>
   <main id="articleList"></main>
 
   <footer>
@@ -35,12 +35,12 @@
 </div>
 
 <script>
-// 读取json中math分类文章渲染
+// 读取json中life分类文章渲染
 fetch('../blog.json')
   .then(res => res.json())
   .then(data => {
     const list = document.getElementById('articleList');
-    const articles = data.math;
+    const articles = data.life;
     if(articles.length === 0){
       list.innerHTML = "<p style='text-align:center;color:#99b3e0;'>暂无文章</p>";
       return;
