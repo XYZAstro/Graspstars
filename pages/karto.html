@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>视觉笺 | Graspstars</title>
+  <title>视觉笺 | XYZ Maker</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -50,26 +50,27 @@
 </div>
 
 <script>
-// 读取json中karto分类文章渲染
-fetch('../blog.json')
+// 读取blog/index.json获取文章列表
+fetch('../blog/index.json')
   .then(res => res.json())
-  .then(data => {
+  .then(indexData => {
     const list = document.getElementById('articleList');
-    const articles = data.karto;
+    const articles = indexData.articles.filter(art => art.category === 'karto');
+    
     if(articles.length === 0){
       list.innerHTML = "<p style='text-align:center;color:#99b3e0;'>暂无文章</p>";
       return;
     }
+    
     articles.forEach(art => {
-      const summary = art.content.length > 20 ? art.content.substring(0, 20) + '...' : art.content;
       const card = document.createElement('div');
       card.className = "blog-card";
       card.innerHTML = `
         <h3 class="card-title">${art.title}</h3>
         <div class="card-date">📅 ${art.date}</div>
-        <div class="card-summary">${summary}</div>
-        <div class="card-full-content" id="full-${art.id}">${art.content}</div>
-        <div class="card-category">Kartogrophy 视觉笺</div>
+        <div class="card-summary">加载中...</div>
+        <div class="card-full-content" id="full-${art.id}">加载中...</div>
+        <div class="card-category">${art.categoryName}</div>
         <div class="card-expand-btn">
           <span>展开阅读</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -77,19 +78,50 @@ fetch('../blog.json')
           </svg>
         </div>
       `;
+      
+      fetch(`../blog/${encodeURIComponent(art.filename)}`)
+        .then(res => res.text())
+        .then(mdContent => {
+          const { content } = parseMarkdown(mdContent);
+          const textContent = content.replace(/<[^>]*>/g, '');
+          const summary = textContent.length > 20 ? textContent.substring(0, 20) + '...' : textContent;
+          card.querySelector('.card-summary').textContent = summary;
+          card.querySelector('.card-full-content').innerHTML = content;
+        })
+        .catch(err => {
+          card.querySelector('.card-summary').textContent = '加载失败';
+          card.querySelector('.card-full-content').textContent = '无法加载文章内容';
+        });
+      
       card.addEventListener('click', function() {
         card.classList.toggle('expanded');
+        const summary = card.querySelector('.card-summary');
         const fullContent = card.querySelector('.card-full-content');
+        summary.classList.toggle('hidden');
         fullContent.classList.toggle('show');
         const expandBtn = card.querySelector('.card-expand-btn span');
         expandBtn.textContent = card.classList.contains('expanded') ? '收起' : '展开阅读';
       });
+      
       list.appendChild(card);
-    })
+    });
   })
-  .catch(err=>{
+  .catch(err => {
     document.getElementById('articleList').innerHTML = "<p style='color:#ff9999;text-align:center;'>加载失败，请检查文件路径</p>";
-  })
+  });
+
+function parseMarkdown(md) {
+  let content = md.replace(/^#\s+.+$/m, '')
+              .replace(/\*\*日期：\*\*\s+.+$/m, '')
+              .replace(/\*\*分类：\*\*\s+.+$/m, '')
+              .trim();
+  content = content
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+  return { content };
+}
 </script>
 <script>
 // 移动端菜单切换

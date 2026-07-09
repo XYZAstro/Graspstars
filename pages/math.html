@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>数理笺 | Graspstars</title>
+  <title>数理笺 | XYZ Maker</title>
   <link rel="stylesheet" href="../style.css">
 </head>
 <body>
@@ -50,28 +50,28 @@
 </div>
 
 <script>
-// 读取json中math分类文章渲染
-fetch('../blog.json')
+// 读取blog/index.json获取文章列表
+fetch('../blog/index.json')
   .then(res => res.json())
-  .then(data => {
+  .then(indexData => {
     const list = document.getElementById('articleList');
-    const articles = data.math;
+    const articles = indexData.articles.filter(art => art.category === 'math');
+    
     if(articles.length === 0){
       list.innerHTML = "<p style='text-align:center;color:#99b3e0;'>暂无文章</p>";
       return;
     }
+    
     articles.forEach(art => {
-      // 截取前20字作为摘要
-      const summary = art.content.length > 20 ? art.content.substring(0, 20) + '...' : art.content;
-      
+      // 先创建卡片框架
       const card = document.createElement('div');
       card.className = "blog-card";
       card.innerHTML = `
         <h3 class="card-title">${art.title}</h3>
         <div class="card-date">📅 ${art.date}</div>
-        <div class="card-summary">${summary}</div>
-        <div class="card-full-content" id="full-${art.id}">${art.content}</div>
-        <div class="card-category">Mathematics 数理笺</div>
+        <div class="card-summary">加载中...</div>
+        <div class="card-full-content" id="full-${art.id}">加载中...</div>
+        <div class="card-category">${art.categoryName}</div>
         <div class="card-expand-btn">
           <span>展开阅读</span>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -79,20 +79,84 @@ fetch('../blog.json')
           </svg>
         </div>
       `;
+      
+      // 加载对应的markdown文件
+      fetch(`../blog/${encodeURIComponent(art.filename)}`)
+        .then(res => res.text())
+        .then(mdContent => {
+          // 解析markdown内容
+          const { title, date, category, content } = parseMarkdown(mdContent);
+          
+          // 更新摘要（截取前20字）
+          const textContent = content.replace(/<[^>]*>/g, '');
+          const summary = textContent.length > 20 ? textContent.substring(0, 20) + '...' : textContent;
+          card.querySelector('.card-summary').textContent = summary;
+          
+          // 更新完整内容
+          card.querySelector('.card-full-content').innerHTML = content;
+        })
+        .catch(err => {
+          card.querySelector('.card-summary').textContent = '加载失败';
+          card.querySelector('.card-full-content').textContent = '无法加载文章内容';
+        });
+      
       // 点击卡片切换展开状态
       card.addEventListener('click', function() {
         card.classList.toggle('expanded');
+        const summary = card.querySelector('.card-summary');
         const fullContent = card.querySelector('.card-full-content');
+        summary.classList.toggle('hidden');
         fullContent.classList.toggle('show');
         const expandBtn = card.querySelector('.card-expand-btn span');
         expandBtn.textContent = card.classList.contains('expanded') ? '收起' : '展开阅读';
       });
+      
       list.appendChild(card);
-    })
+    });
   })
-  .catch(err=>{
+  .catch(err => {
     document.getElementById('articleList').innerHTML = "<p style='color:#ff9999;text-align:center;'>加载失败，请检查文件路径</p>";
-  })
+  });
+
+// 简单的Markdown解析函数
+function parseMarkdown(md) {
+  let title = '';
+  let date = '';
+  let category = '';
+  let content = '';
+  
+  // 解析标题（# 开头）
+  const titleMatch = md.match(/^#\s+(.+)$/m);
+  if (titleMatch) {
+    title = titleMatch[1];
+  }
+  
+  // 解析日期和分类（**日期：** 和 **分类：**）
+  const dateMatch = md.match(/\*\*日期：\*\*\s+(.+)$/m);
+  if (dateMatch) {
+    date = dateMatch[1];
+  }
+  
+  const categoryMatch = md.match(/\*\*分类：\*\*\s+(.+)$/m);
+  if (categoryMatch) {
+    category = categoryMatch[1];
+  }
+  
+  // 获取正文内容（去除标题和元数据）
+  content = md.replace(/^#\s+.+$/m, '')
+              .replace(/\*\*日期：\*\*\s+.+$/m, '')
+              .replace(/\*\*分类：\*\*\s+.+$/m, '')
+              .trim();
+  
+  // 简单的Markdown到HTML转换
+  content = content
+    .replace(/^###\s+(.+)$/gm, '<h3>$1</h3>')
+    .replace(/^##\s+(.+)$/gm, '<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\n/g, '<br>');
+  
+  return { title, date, category, content };
+}
 </script>
 <script>
 // 移动端菜单切换

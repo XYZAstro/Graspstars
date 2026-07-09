@@ -93,11 +93,17 @@ header.nav-bar {
 .logo-box img {
   height: 42px;
   width: auto;
+  opacity: 0.8;
 }
 .logo-text {
-  font-size: 22px;
+  font-size: 18px;
   color: #c3e0ff;
   letter-spacing: 2px;
+}
+.logo-motto {
+  font-size: 10px;
+  color: #88a8d8;
+  letter-spacing: 1px;
 }
 /* 导航菜单 */
 .nav-menu {
@@ -164,9 +170,13 @@ header.nav-bar {
   margin-bottom: 16px;
 }
 .card-summary {
-  line-height: 1.7;
-  color: #c5d6f5;
   font-size: 15px;
+  color: #88a8d8;
+  line-height: 1.6;
+  transition: opacity 0.3s, max-height 0.3s;
+}
+.card-summary.hidden {
+  display: none;
 }
 .card-full-content {
   line-height: 1.8;
@@ -205,6 +215,10 @@ header.nav-bar {
 .blog-card.expanded .card-expand-btn svg {
   transform: rotate(180deg);
 }
+.logo-text-container {
+  display: flex;
+  flex-direction: column;
+}
 .card-category {
   display: inline-block;
   padding: 4px 12px;
@@ -213,6 +227,108 @@ header.nav-bar {
   font-size: 13px;
   color: #74aaff;
   margin-top: 12px;
+}
+
+/* 个人简介样式 */
+.profile-section {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+.profile-avatar {
+  margin-bottom: 24px;
+}
+.avatar-circle {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(90, 150, 255, 0.2), rgba(138, 180, 248, 0.1));
+  border: 2px solid rgba(90, 150, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+.avatar-icon {
+  font-size: 48px;
+}
+.profile-name {
+  font-size: 32px;
+  color: #c3e0ff;
+  margin-bottom: 8px;
+  letter-spacing: 2px;
+}
+.profile-title {
+  font-size: 16px;
+  color: #88a8d8;
+  margin-bottom: 20px;
+}
+.profile-intro {
+  font-size: 15px;
+  color: #99b3e0;
+  line-height: 1.8;
+  margin-bottom: 30px;
+}
+.profile-stats {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.stat-item {
+  text-align: center;
+}
+.stat-number {
+  display: block;
+  font-size: 28px;
+  font-weight: bold;
+  color: #74aaff;
+}
+.stat-label {
+  font-size: 13px;
+  color: #6074a3;
+  margin-top: 4px;
+}
+.profile-bio {
+  text-align: left;
+  background: rgba(90, 150, 255, 0.08);
+  border-radius: 12px;
+  padding: 24px;
+  margin-bottom: 30px;
+}
+.profile-bio h3 {
+  font-size: 16px;
+  color: #a6ccff;
+  margin-bottom: 12px;
+}
+.profile-bio p {
+  font-size: 14px;
+  color: #99b3e0;
+  line-height: 1.8;
+  margin-bottom: 10px;
+}
+.profile-bio p:last-child {
+  margin-bottom: 0;
+}
+.profile-links {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
+.social-link {
+  display: inline-block;
+  padding: 10px 20px;
+  background: rgba(90, 150, 255, 0.15);
+  border-radius: 20px;
+  color: #74aaff;
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+.social-link:hover {
+  background: rgba(90, 150, 255, 0.3);
+  color: #99c2ff;
 }
 footer {
   text-align: center;
