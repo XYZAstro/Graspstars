@@ -17,13 +17,28 @@
   </div>
   <nav class="nav-menu">
     <a href="../index.html">首页</a>
-    <a href="./math.html" >Mathematics 数理笺</a>
+    <a href="./math.html">Mathematics 数理笺</a>
     <a href="./astro.html">Astro 深空笺</a>
     <a href="./karto.html">Kartogrophy 视觉笺</a>
     <a href="./eng.html" class="active">Engineering 工程笺</a>
     <a href="./life.html">Romantic 生活笺</a>
   </nav>
+  <!-- 移动端汉堡菜单按钮 -->
+  <div class="mobile-menu-btn" id="mobileMenuBtn">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 </header>
+<!-- 移动端导航菜单 -->
+<nav class="mobile-nav-menu" id="mobileNavMenu">
+  <a href="../index.html">首页</a>
+  <a href="./math.html">Mathematics 数理笺</a>
+  <a href="./astro.html">Astro 深空笺</a>
+  <a href="./karto.html">Kartogrophy 视觉笺</a>
+  <a href="./eng.html" class="active">Engineering 工程笺</a>
+  <a href="./life.html">Romantic 生活笺</a>
+</nav>
 
 <div class="container">
   <h2 class="page-title">Engineering 工程笺</h2>
@@ -35,7 +50,7 @@
 </div>
 
 <script>
-// 读取json中math分类文章渲染
+// 读取json中eng分类文章渲染
 fetch('../blog.json')
   .then(res => res.json())
   .then(data => {
@@ -59,6 +74,15 @@ fetch('../blog.json')
   .catch(err=>{
     document.getElementById('articleList').innerHTML = "<p style='color:#ff9999;text-align:center;'>加载失败，请检查文件路径</p>";
   })
+</script>
+<script>
+// 移动端菜单切换
+const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+const mobileNavMenu = document.getElementById('mobileNavMenu');
+mobileMenuBtn.addEventListener('click', function() {
+  mobileMenuBtn.classList.toggle('active');
+  mobileNavMenu.classList.toggle('show');
+});
 </script>
 </body>
 </html>
