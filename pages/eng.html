@@ -49,21 +49,6 @@
   </footer>
 </div>
 
-<!-- 博客详情模态框 -->
-<div class="blog-modal" id="blogModal">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h3 class="modal-title" id="modalTitle"></h3>
-      <button class="modal-close" id="modalCloseBtn">×</button>
-    </div>
-    <div class="modal-body">
-      <div class="modal-date" id="modalDate"></div>
-      <div class="modal-text" id="modalContent"></div>
-      <div class="modal-category" id="modalCategory"></div>
-    </div>
-  </div>
-</div>
-
 <script>
 // 读取json中eng分类文章渲染
 fetch('../blog.json')
@@ -76,20 +61,28 @@ fetch('../blog.json')
       return;
     }
     articles.forEach(art => {
+      const summary = art.content.length > 20 ? art.content.substring(0, 20) + '...' : art.content;
       const card = document.createElement('div');
       card.className = "blog-card";
-      card.style.cursor = "pointer";
-      card.setAttribute('data-title', art.title);
-      card.setAttribute('data-date', art.date);
-      card.setAttribute('data-content', art.content);
-      card.setAttribute('data-category', 'Engineering 工程笺');
       card.innerHTML = `
         <h3 class="card-title">${art.title}</h3>
         <div class="card-date">📅 ${art.date}</div>
-        <div class="card-content">${art.content}</div>
+        <div class="card-summary">${summary}</div>
+        <div class="card-full-content" id="full-${art.id}">${art.content}</div>
+        <div class="card-category">Engineering 工程笺</div>
+        <div class="card-expand-btn">
+          <span>展开阅读</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M19 9l-7 7-7-7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
       `;
       card.addEventListener('click', function() {
-        openBlogModal(art.title, art.date, art.content, 'Engineering 工程笺');
+        card.classList.toggle('expanded');
+        const fullContent = card.querySelector('.card-full-content');
+        fullContent.classList.toggle('show');
+        const expandBtn = card.querySelector('.card-expand-btn span');
+        expandBtn.textContent = card.classList.contains('expanded') ? '收起' : '展开阅读';
       });
       list.appendChild(card);
     })
@@ -97,30 +90,6 @@ fetch('../blog.json')
   .catch(err=>{
     document.getElementById('articleList').innerHTML = "<p style='color:#ff9999;text-align:center;'>加载失败，请检查文件路径</p>";
   })
-
-function openBlogModal(title, date, content, category) {
-  document.getElementById('modalTitle').textContent = title;
-  document.getElementById('modalDate').textContent = '📅 ' + date;
-  document.getElementById('modalContent').textContent = content;
-  document.getElementById('modalCategory').textContent = category;
-  document.getElementById('blogModal').classList.add('show');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeBlogModal() {
-  document.getElementById('blogModal').classList.remove('show');
-  document.body.style.overflow = '';
-}
-
-document.getElementById('modalCloseBtn').addEventListener('click', closeBlogModal);
-document.getElementById('blogModal').addEventListener('click', function(e) {
-  if(e.target === this) closeBlogModal();
-});
-document.addEventListener('keydown', function(e) {
-  if(e.key === 'Escape' && document.getElementById('blogModal').classList.contains('show')) {
-    closeBlogModal();
-  }
-});
 </script>
 <script>
 // 移动端菜单切换

@@ -134,7 +134,7 @@ header.nav-bar {
   border-left: 4px solid #74aaff;
   padding-left: 16px;
 }
-/* 文章卡片 */
+/* 文章卡片 - 手风琴效果 */
 .blog-card {
   background: rgba(20, 25, 60, 0.6);
   backdrop-filter: blur(8px);
@@ -143,11 +143,15 @@ header.nav-bar {
   padding: 24px;
   margin-bottom: 24px;
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 .blog-card:hover {
   border-color: #74aaff;
-  transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(90, 150, 255, 0.15);
+}
+.blog-card.expanded {
+  transform: translateY(-4px);
+  border-color: #74aaff;
 }
 .card-title {
   font-size: 22px;
@@ -159,9 +163,56 @@ header.nav-bar {
   font-size: 14px;
   margin-bottom: 16px;
 }
-.card-content {
+.card-summary {
   line-height: 1.7;
   color: #c5d6f5;
+  font-size: 15px;
+}
+.card-full-content {
+  line-height: 1.8;
+  color: #c5d6f5;
+  font-size: 16px;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #2c3b70;
+  display: none;
+}
+.card-full-content.show {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+.card-expand-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 16px;
+  color: #74aaff;
+  font-size: 14px;
+  transition: all 0.3s;
+}
+.card-expand-btn:hover {
+  color: #99c2ff;
+}
+.card-expand-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.3s;
+}
+.blog-card.expanded .card-expand-btn svg {
+  transform: rotate(180deg);
+}
+.card-category {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(90, 150, 255, 0.15);
+  border-radius: 20px;
+  font-size: 13px;
+  color: #74aaff;
+  margin-top: 12px;
 }
 footer {
   text-align: center;
