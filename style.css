@@ -205,6 +205,7 @@ footer {
   top: 70px;
   left: 0;
   right: 0;
+  z-index: 9999;
   background: rgba(8, 10, 35, 0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #2c3b70;
@@ -280,4 +281,93 @@ footer {
   .logo-text {
     font-size: 18px;
   }
+}
+
+/* 博客详情模态框 */
+.blog-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+.blog-modal.show {
+  display: flex;
+}
+.modal-content {
+  background: rgba(15, 20, 50, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid #2c3b70;
+  border-radius: 16px;
+  max-width: 800px;
+  width: 100%;
+  max-height: 85vh;
+  overflow-y: auto;
+  position: relative;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.modal-header {
+  padding: 24px;
+  border-bottom: 1px solid #2c3b70;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.modal-title {
+  font-size: 24px;
+  color: #d0e6ff;
+}
+.modal-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(90, 150, 255, 0.15);
+  color: #b0c8f0;
+  font-size: 20px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.modal-close:hover {
+  background: rgba(90, 150, 255, 0.3);
+  color: #fff;
+}
+.modal-body {
+  padding: 24px;
+}
+.modal-date {
+  color: #798cb8;
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+.modal-text {
+  line-height: 1.8;
+  color: #c5d6f5;
+  font-size: 16px;
+}
+.modal-category {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(90, 150, 255, 0.15);
+  border-radius: 20px;
+  font-size: 13px;
+  color: #74aaff;
+  margin-top: 20px;
 }

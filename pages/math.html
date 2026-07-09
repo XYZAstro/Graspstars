@@ -49,6 +49,21 @@
   </footer>
 </div>
 
+<!-- 博客详情模态框 -->
+<div class="blog-modal" id="blogModal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 class="modal-title" id="modalTitle"></h3>
+      <button class="modal-close" id="modalCloseBtn">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-date" id="modalDate"></div>
+      <div class="modal-text" id="modalContent"></div>
+      <div class="modal-category" id="modalCategory"></div>
+    </div>
+  </div>
+</div>
+
 <script>
 // 读取json中math分类文章渲染
 fetch('../blog.json')
@@ -63,17 +78,59 @@ fetch('../blog.json')
     articles.forEach(art => {
       const card = document.createElement('div');
       card.className = "blog-card";
+      card.style.cursor = "pointer";
+      card.setAttribute('data-title', art.title);
+      card.setAttribute('data-date', art.date);
+      card.setAttribute('data-content', art.content);
+      card.setAttribute('data-category', 'Mathematics 数理笺');
       card.innerHTML = `
         <h3 class="card-title">${art.title}</h3>
         <div class="card-date">📅 ${art.date}</div>
         <div class="card-content">${art.content}</div>
       `;
+      // 点击卡片打开弹窗
+      card.addEventListener('click', function() {
+        openBlogModal(art.title, art.date, art.content, 'Mathematics 数理笺');
+      });
       list.appendChild(card);
     })
   })
   .catch(err=>{
     document.getElementById('articleList').innerHTML = "<p style='color:#ff9999;text-align:center;'>加载失败，请检查文件路径</p>";
   })
+
+// 打开博客详情弹窗
+function openBlogModal(title, date, content, category) {
+  document.getElementById('modalTitle').textContent = title;
+  document.getElementById('modalDate').textContent = '📅 ' + date;
+  document.getElementById('modalContent').textContent = content;
+  document.getElementById('modalCategory').textContent = category;
+  document.getElementById('blogModal').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+
+// 关闭弹窗
+function closeBlogModal() {
+  document.getElementById('blogModal').classList.remove('show');
+  document.body.style.overflow = '';
+}
+
+// 点击关闭按钮关闭弹窗
+document.getElementById('modalCloseBtn').addEventListener('click', closeBlogModal);
+
+// 点击弹窗背景关闭弹窗
+document.getElementById('blogModal').addEventListener('click', function(e) {
+  if(e.target === this) {
+    closeBlogModal();
+  }
+});
+
+// ESC键关闭弹窗
+document.addEventListener('keydown', function(e) {
+  if(e.key === 'Escape' && document.getElementById('blogModal').classList.contains('show')) {
+    closeBlogModal();
+  }
+});
 </script>
 <script>
 // 移动端菜单切换
