@@ -1,0 +1,114 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Microsoft YaHei", sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  background: #050518;
+  color: #e6edff;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* 星空背景动画 */
+.star-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #fff, transparent),
+    radial-gradient(1px 1px at 40px 70px, #fff, transparent),
+    radial-gradient(2px 2px at 50px 160px, #b8d4ff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: twinkle 8s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+/* 页面容器 */
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+/* 头部标题 */
+header {
+  text-align: center;
+  margin-bottom: 60px;
+  border-bottom: 1px solid #334170;
+  padding-bottom: 30px;
+}
+header h1 {
+  font-size: 36px;
+  color: #c3e0ff;
+  letter-spacing: 3px;
+  margin-bottom: 10px;
+}
+header p {
+  color: #8fa6d9;
+  font-size: 16px;
+}
+
+/* 博客卡片 */
+.blog-card {
+  background: rgba(20, 25, 60, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid #2c3b70;
+  border-radius: 14px;
+  padding: 24px;
+  margin-bottom: 24px;
+  transition: all 0.3s ease;
+}
+.blog-card:hover {
+  border-color: #74aaff;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(90, 150, 255, 0.15);
+}
+.card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.card-title {
+  font-size: 22px;
+  color: #d0e6ff;
+}
+.tag {
+  padding: 4px 12px;
+  background: #20346b;
+  color: #a6ccff;
+  border-radius: 20px;
+  font-size: 13px;
+}
+.card-date {
+  color: #798cb8;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+.card-content {
+  line-height: 1.7;
+  color: #c5d6f5;
+}
+
+/* 底部 */
+footer {
+  text-align: center;
+  margin-top: 80px;
+  padding-top: 30px;
+  border-top: 1px solid #334170;
+  color: #6074a3;
+  font-size: 14px;
+}

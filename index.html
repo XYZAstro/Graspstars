@@ -1,11 +1,54 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <!-- 适配手机，GitHub Pages必备 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>星尘日记 | 个人博客</title>
+  <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    
+  <!-- 星空背景层 -->
+  <div class="star-bg"></div>
+
+  <div class="container">
+    <header>
+      <h1>星尘日记 Graspstars</h1>
+      <p>仰望星空，记录生活与代码</p>
+    </header>
+
+    <main id="blogList">
+      <!-- JS自动渲染blog.json里的文章 -->
+    </main>
+
+    <footer>
+      <p>Powered by GitHub Pages | 星空主题个人博客 © 2026 XYZAstro</p>
+    </footer>
+  </div>
+
+  <script>
+    // 读取本地blog.json渲染博客列表（GitHub Pages静态环境完美兼容）
+    fetch('./blog.json')
+      .then(res => res.json())
+      .then(articles => {
+        const listWrap = document.getElementById('blogList');
+        articles.forEach(art => {
+          const card = document.createElement('div');
+          card.className = 'blog-card';
+          card.innerHTML = `
+            <div class="card-head">
+              <h2 class="card-title">${art.title}</h2>
+              <span class="tag">${art.tag}</span>
+            </div>
+            <div class="card-date">📅 ${art.date}</div>
+            <div class="card-content">${art.content}</div>
+          `;
+          listWrap.appendChild(card);
+        })
+      })
+      .catch(err => {
+        document.getElementById('blogList').innerHTML = '<p style="text-align:center;color:#ff9999;">文章加载失败，请检查文件路径</p>';
+      })
+  </script>
 </body>
 </html>
