@@ -2,53 +2,39 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <!-- 适配手机，GitHub Pages必备 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>星尘日记 | 个人博客</title>
+  <title>Graspstars | 星尘主页</title>
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <!-- 星空背景层 -->
-  <div class="star-bg"></div>
+<div class="star-bg"></div>
 
-  <div class="container">
-    <header>
-      <h1>星尘日记 Graspstars</h1>
-      <p>仰望星空，记录生活与代码</p>
-    </header>
+<!-- 顶部导航栏（所有页面共用） -->
+<header class="nav-bar">
+  <div class="logo-box">
+    <img src="./logo.png" alt="LOGO">
+    <span class="logo-text">Graspstars</span>
+  </div>
+  <nav class="nav-menu">
+    <a href="./index.html" class="active">首页</a>
+    <a href="./pages/math.html">Mathematics 数理笺</a>
+    <a href="./pages/astro.html">Astro 深空笺</a>
+    <a href="./pages/karto.html">Kartogrophy 视觉笺</a>
+    <a href="./pages/eng.html">Engineering 工程笺</a>
+    <a href="./pages/life.html">Romantic 生活笺</a>
+  </nav>
+</header>
 
-    <main id="blogList">
-      <!-- JS自动渲染blog.json里的文章 -->
-    </main>
-
-    <footer>
-      <p>Powered by GitHub Pages | 星空主题个人博客 © 2026 XYZAstro</p>
-    </footer>
+<div class="container">
+  <h2 class="page-title">欢迎来到星尘日记</h2>
+  <div style="text-align:center; margin:60px 0; color:#99b3e0; font-size:18px;">
+    <p>分栏记录数理、天文、视觉设计、工程创造与日常随笔</p>
+    <p style="margin-top:12px;">点击顶部导航栏进入对应分类页面查看文章</p>
   </div>
 
-  <script>
-    // 读取本地blog.json渲染博客列表（GitHub Pages静态环境完美兼容）
-    fetch('./blog.json')
-      .then(res => res.json())
-      .then(articles => {
-        const listWrap = document.getElementById('blogList');
-        articles.forEach(art => {
-          const card = document.createElement('div');
-          card.className = 'blog-card';
-          card.innerHTML = `
-            <div class="card-head">
-              <h2 class="card-title">${art.title}</h2>
-              <span class="tag">${art.tag}</span>
-            </div>
-            <div class="card-date">📅 ${art.date}</div>
-            <div class="card-content">${art.content}</div>
-          `;
-          listWrap.appendChild(card);
-        })
-      })
-      .catch(err => {
-        document.getElementById('blogList').innerHTML = '<p style="text-align:center;color:#ff9999;">文章加载失败，请检查文件路径</p>';
-      })
-  </script>
+  <footer>
+    <p>Powered by GitHub Pages | 星空主题博客 © 2026 XYZAstro</p>
+  </footer>
+</div>
 </body>
 </html>

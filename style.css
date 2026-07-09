@@ -4,7 +4,6 @@
   box-sizing: border-box;
   font-family: "Microsoft YaHei", sans-serif;
 }
-
 body {
   min-height: 100vh;
   background: #050518;
@@ -12,8 +11,7 @@ body {
   overflow-x: hidden;
   position: relative;
 }
-
-/* 星空背景动画 */
+/* 闪烁星空背景 */
 .star-bg {
   position: fixed;
   top: 0;
@@ -30,38 +28,75 @@ body {
   background-size: 200px 200px;
   animation: twinkle 8s ease-in-out infinite;
 }
-
 @keyframes twinkle {
   0%, 100% { opacity: 0.7; }
   50% { opacity: 1; }
 }
 
-/* 页面容器 */
+/* 顶部导航栏 */
+header.nav-bar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  background: rgba(8, 10, 35, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #2c3b70;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 70px;
+}
+.logo-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-box img {
+  height: 42px;
+  width: auto;
+}
+.logo-text {
+  font-size: 22px;
+  color: #c3e0ff;
+  letter-spacing: 2px;
+}
+/* 导航菜单 */
+.nav-menu {
+  display: flex;
+  gap: 8px;
+}
+.nav-menu a {
+  color: #b0c8f0;
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 8px;
+  transition: all 0.3s;
+  font-size: 15px;
+}
+.nav-menu a:hover {
+  background: rgba(90, 150, 255, 0.15);
+  color: #74aaff;
+}
+.nav-menu a.active {
+  background: #20346b;
+  color: #a6ccff;
+}
+
+/* 页面容器通用 */
 .container {
-  max-width: 900px;
+  max-width: 1000px;
   margin: 0 auto;
   padding: 40px 20px;
 }
-
-/* 头部标题 */
-header {
-  text-align: center;
-  margin-bottom: 60px;
-  border-bottom: 1px solid #334170;
-  padding-bottom: 30px;
+.page-title {
+  font-size: 32px;
+  margin-bottom: 40px;
+  color: #d0e6ff;
+  border-left: 4px solid #74aaff;
+  padding-left: 16px;
 }
-header h1 {
-  font-size: 36px;
-  color: #c3e0ff;
-  letter-spacing: 3px;
-  margin-bottom: 10px;
-}
-header p {
-  color: #8fa6d9;
-  font-size: 16px;
-}
-
-/* 博客卡片 */
+/* 文章卡片 */
 .blog-card {
   background: rgba(20, 25, 60, 0.6);
   backdrop-filter: blur(8px);
@@ -76,22 +111,10 @@ header p {
   transform: translateY(-4px);
   box-shadow: 0 8px 30px rgba(90, 150, 255, 0.15);
 }
-.card-head {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 12px;
-}
 .card-title {
   font-size: 22px;
   color: #d0e6ff;
-}
-.tag {
-  padding: 4px 12px;
-  background: #20346b;
-  color: #a6ccff;
-  border-radius: 20px;
-  font-size: 13px;
+  margin-bottom: 10px;
 }
 .card-date {
   color: #798cb8;
@@ -102,8 +125,6 @@ header p {
   line-height: 1.7;
   color: #c5d6f5;
 }
-
-/* 底部 */
 footer {
   text-align: center;
   margin-top: 80px;

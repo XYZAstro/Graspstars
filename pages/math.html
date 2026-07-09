@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>数理笺 | Graspstars</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+<div class="star-bg"></div>
+
+<!-- 导航栏（所有页面完全一致） -->
+<header class="nav-bar">
+  <div class="logo-box">
+    <img src="../logo.png" alt="LOGO">
+    <span class="logo-text">Graspstars</span>
+  </div>
+  <nav class="nav-menu">
+    <a href="../index.html">首页</a>
+    <a href="./math.html" class="active">Mathematics 数理笺</a>
+    <a href="./astro.html">Astro 深空笺</a>
+    <a href="./karto.html">Kartogrophy 视觉笺</a>
+    <a href="./eng.html">Engineering 工程笺</a>
+    <a href="./life.html">Romantic 生活笺</a>
+  </nav>
+</header>
+
+<div class="container">
+  <h2 class="page-title">Mathematics 数理笺</h2>
+  <main id="articleList"></main>
+
+  <footer>
+    <p>Powered by GitHub Pages | 星空主题博客 © 2026 XYZAstro</p>
+  </footer>
+</div>
+
+<script>
+// 读取json中math分类文章渲染
+fetch('../blog.json')
+  .then(res => res.json())
+  .then(data => {
+    const list = document.getElementById('articleList');
+    const articles = data.math;
+    if(articles.length === 0){
+      list.innerHTML = "<p style='text-align:center;color:#99b3e0;'>暂无文章</p>";
+      return;
+    }
+    articles.forEach(art => {
+      const card = document.createElement('div');
+      card.className = "blog-card";
+      card.innerHTML = `
+        <h3 class="card-title">${art.title}</h3>
+        <div class="card-date">📅 ${art.date}</div>
+        <div class="card-content">${art.content}</div>
+      `;
+      list.appendChild(card);
+    })
+  })
+  .catch(err=>{
+    document.getElementById('articleList').innerHTML = "<p style='color:#ff9999;text-align:center;'>加载失败，请检查文件路径</p>";
+  })
+</script>
+</body>
+</html>
